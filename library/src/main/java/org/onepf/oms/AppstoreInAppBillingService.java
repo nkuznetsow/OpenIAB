@@ -18,6 +18,7 @@ package org.onepf.oms;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 
 import org.jetbrains.annotations.Nullable;
 import org.onepf.oms.appstore.googleUtils.IabException;
@@ -41,7 +42,7 @@ public interface AppstoreInAppBillingService {
      */
     void startSetup(final IabHelper.OnIabSetupFinishedListener listener);
 
-    void launchPurchaseFlow(Activity act, String sku, String itemType, int requestCode, IabHelper.OnIabPurchaseFinishedListener listener, String extraData);
+    void launchPurchaseFlow(Activity act, String sku, String itemType, int requestCode, IabHelper.OnIabPurchaseFinishedListener listener, String extraData, Bundle extraParams);
 
     boolean handleActivityResult(int requestCode, int resultCode, Intent data);
 

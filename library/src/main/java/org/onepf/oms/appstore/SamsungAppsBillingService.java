@@ -239,7 +239,9 @@ public class SamsungAppsBillingService implements AppstoreInAppBillingService {
     }
 
     @Override
-    public void launchPurchaseFlow(@NotNull Activity activity, @NotNull String sku, String itemType, int requestCode, OnIabPurchaseFinishedListener listener, String extraData) {
+    public void launchPurchaseFlow(@NotNull Activity activity, @NotNull String sku, String itemType,
+                                   int requestCode, OnIabPurchaseFinishedListener listener,
+                                   String extraData, Bundle extraParams) {
         String itemGroupId = getItemGroupId(sku);
         String itemId = getItemId(sku);
 

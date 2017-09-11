@@ -46,5 +46,7 @@ interface IOpenInAppBillingService {
     Bundle getSkuDetails(int apiVersion, String packageName, String type, in Bundle skusBundle);
     Bundle getBuyIntent(int apiVersion, String packageName, String sku, String type, String developerPayload);
     Bundle getPurchases(int apiVersion, String packageName, String type, String continuationToken);
+    Bundle getBuyIntentExtraParams(int apiVersion, String packageName, String sku,
+            String type, String developerPayload, in Bundle extraParams);
     int consumePurchase(int apiVersion, String packageName, String purchaseToken);
 }

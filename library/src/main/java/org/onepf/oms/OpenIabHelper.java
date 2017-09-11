@@ -26,6 +26,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
 import android.content.pm.ServiceInfo;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
@@ -1294,34 +1295,36 @@ public class OpenIabHelper {
         return appStoreBillingService.subscriptionsSupported();
     }
 
-    public void launchPurchaseFlow(Activity act, @NotNull String sku, int requestCode, IabHelper.OnIabPurchaseFinishedListener listener) {
-        launchPurchaseFlow(act, sku, requestCode, listener, "");
+    public void launchPurchaseFlow(Activity act, @NotNull String sku, int requestCode,
+                                   IabHelper.OnIabPurchaseFinishedListener listener, Bundle extraParams) {
+        launchPurchaseFlow(act, sku, requestCode, listener, "", extraParams);
     }
 
     public void launchPurchaseFlow(Activity act, @NotNull String sku, int requestCode,
-                                   IabHelper.OnIabPurchaseFinishedListener listener, String extraData) {
-        launchPurchaseFlow(act, sku, ITEM_TYPE_INAPP, requestCode, listener, extraData);
+                                   IabHelper.OnIabPurchaseFinishedListener listener, String extraData, Bundle extraParams) {
+        launchPurchaseFlow(act, sku, ITEM_TYPE_INAPP, requestCode, listener, extraData, extraParams);
     }
 
     public void launchSubscriptionPurchaseFlow(Activity act, @NotNull String sku, int requestCode,
-                                               IabHelper.OnIabPurchaseFinishedListener listener) {
-        launchSubscriptionPurchaseFlow(act, sku, requestCode, listener, "");
+                                               IabHelper.OnIabPurchaseFinishedListener listener, Bundle extraParams) {
+        launchSubscriptionPurchaseFlow(act, sku, requestCode, listener, "", extraParams);
     }
 
     public void launchSubscriptionPurchaseFlow(Activity act, @NotNull String sku, int requestCode,
-                                               IabHelper.OnIabPurchaseFinishedListener listener, String extraData) {
-        launchPurchaseFlow(act, sku, ITEM_TYPE_SUBS, requestCode, listener, extraData);
+                                               IabHelper.OnIabPurchaseFinishedListener listener, String extraData, Bundle extraParams) {
+        launchPurchaseFlow(act, sku, ITEM_TYPE_SUBS, requestCode, listener, extraData, extraParams);
     }
 
     public void launchPurchaseFlow(Activity act, @NotNull String sku, String itemType, int requestCode,
-                                   IabHelper.OnIabPurchaseFinishedListener listener, String extraData) {
+                                   IabHelper.OnIabPurchaseFinishedListener listener, String extraData, Bundle extraParams) {
         checkSetupDone("launchPurchaseFlow");
         appStoreBillingService.launchPurchaseFlow(act,
                 SkuManager.getInstance().getStoreSku(appstore.getAppstoreName(), sku),
                 itemType,
                 requestCode,
                 listener,
-                extraData);
+                extraData,
+                extraParams);
     }
 
     public boolean handleActivityResult(int requestCode, int resultCode, Intent data) {

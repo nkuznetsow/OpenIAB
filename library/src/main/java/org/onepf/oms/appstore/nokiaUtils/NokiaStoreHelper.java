@@ -182,7 +182,8 @@ public class NokiaStoreHelper implements AppstoreInAppBillingService {
     @SuppressWarnings("MethodWithTooManyParameters")
     @Override
     public void launchPurchaseFlow(@NotNull final Activity act, final String sku, @NotNull final String itemType, final int requestCode,
-                                   @Nullable final IabHelper.OnIabPurchaseFinishedListener listener, final String extraData) {
+                                   @Nullable final IabHelper.OnIabPurchaseFinishedListener listener, final String extraData,
+                                   final Bundle extraParams) {
 
         Logger.i("NokiaStoreHelper.launchPurchaseFlow");
 

@@ -1033,7 +1033,15 @@ public class OpenIabHelper {
                 }
             };
 
-            if (context.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)) {
+            boolean bind = false;
+
+            try {
+                bind = context.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
+            } catch (Exception e) {
+                Logger.e("bind error", e);
+            }
+
+            if (bind) {
                 // Wait for open store service
                 return;
             } else {

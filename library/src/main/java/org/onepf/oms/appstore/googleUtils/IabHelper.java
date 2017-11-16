@@ -166,6 +166,9 @@ public class IabHelper implements AppstoreInAppBillingService {
     public static final String GET_SKU_DETAILS_ITEM_LIST = "ITEM_ID_LIST";
     public static final String GET_SKU_DETAILS_ITEM_TYPE_LIST = "ITEM_TYPE_LIST";
 
+    // Some extra keys
+    public static final String EXTRA_SKUS_TO_REPLACE = "skusToReplace";
+
     /**
      * TODO: IabHelper for Google and OpenStore must not be same
      */
@@ -380,23 +383,23 @@ public class IabHelper implements AppstoreInAppBillingService {
     @Nullable
     OnIabPurchaseFinishedListener mPurchaseListener;
 
-    public void launchPurchaseFlow(@NotNull Activity act, String sku, int requestCode, OnIabPurchaseFinishedListener listener) {
-        launchPurchaseFlow(act, sku, requestCode, listener, "");
+    public void launchPurchaseFlow(@NotNull Activity act, String sku, int requestCode, OnIabPurchaseFinishedListener listener, Bundle extraParams) {
+        launchPurchaseFlow(act, sku, requestCode, listener, "", extraParams);
     }
 
     public void launchPurchaseFlow(@NotNull Activity act, String sku, int requestCode,
-                                   OnIabPurchaseFinishedListener listener, String extraData) {
-        launchPurchaseFlow(act, sku, ITEM_TYPE_INAPP, requestCode, listener, extraData);
+                                   OnIabPurchaseFinishedListener listener, String extraData, Bundle extraParams) {
+        launchPurchaseFlow(act, sku, ITEM_TYPE_INAPP, requestCode, listener, extraData, extraParams);
     }
 
     public void launchSubscriptionPurchaseFlow(@NotNull Activity act, String sku, int requestCode,
-                                               OnIabPurchaseFinishedListener listener) {
-        launchSubscriptionPurchaseFlow(act, sku, requestCode, listener, "");
+                                               OnIabPurchaseFinishedListener listener, Bundle extraParams) {
+        launchSubscriptionPurchaseFlow(act, sku, requestCode, listener, "", extraParams);
     }
 
     public void launchSubscriptionPurchaseFlow(@NotNull Activity act, String sku, int requestCode,
-                                               OnIabPurchaseFinishedListener listener, String extraData) {
-        launchPurchaseFlow(act, sku, ITEM_TYPE_SUBS, requestCode, listener, extraData);
+                                               OnIabPurchaseFinishedListener listener, String extraData, Bundle extraParams) {
+        launchPurchaseFlow(act, sku, ITEM_TYPE_SUBS, requestCode, listener, extraData, extraParams);
     }
 
     /**
@@ -418,7 +421,7 @@ public class IabHelper implements AppstoreInAppBillingService {
      *                    and will always be returned when the purchase is queried.
      */
     public void launchPurchaseFlow(@NotNull Activity act, String sku, @NotNull String itemType, int requestCode,
-                                   @Nullable OnIabPurchaseFinishedListener listener, String extraData) {
+                                   @Nullable OnIabPurchaseFinishedListener listener, String extraData, Bundle extraParams) {
         checkSetupDone("launchPurchaseFlow");
         flagStartAsync("launchPurchaseFlow");
         IabResult result;
@@ -441,7 +444,13 @@ public class IabHelper implements AppstoreInAppBillingService {
                 flagEndAsync();
                 return;
             }
-            Bundle buyIntentBundle = mService.getBuyIntent(3, getPackageName(), sku, itemType, extraData);
+            Bundle buyIntentBundle;
+
+            if(extraParams != null) {
+                // skusToReplace - List<String>
+                buyIntentBundle = mService.getBuyIntentExtraParams(6, getPackageName(), sku, itemType, extraData, extraParams);
+            } else
+                buyIntentBundle = mService.getBuyIntent(3, getPackageName(), sku, itemType, extraData);
             int response = getResponseCodeFromBundle(buyIntentBundle);
             if (response != BILLING_RESPONSE_RESULT_OK) {
                 result = new IabResult(response, "Unable to buy item");

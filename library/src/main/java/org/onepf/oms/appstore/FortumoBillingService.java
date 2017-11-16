@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Pair;
 
@@ -83,7 +84,9 @@ public class FortumoBillingService implements AppstoreInAppBillingService {
     }
 
     @Override
-    public void launchPurchaseFlow(@NotNull final Activity act, String sku, String itemType, int requestCode, IabHelper.OnIabPurchaseFinishedListener listener, String extraData) {
+    public void launchPurchaseFlow(@NotNull final Activity act, String sku, String itemType,
+                                   int requestCode, IabHelper.OnIabPurchaseFinishedListener listener,
+                                   String extraData, Bundle extraParams) {
         this.purchaseFinishedListener = listener;
         this.activityRequestCode = requestCode;
         this.developerPayload = extraData;

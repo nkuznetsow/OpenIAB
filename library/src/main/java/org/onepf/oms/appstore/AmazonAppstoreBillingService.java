@@ -19,6 +19,7 @@ package org.onepf.oms.appstore;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 
 import com.amazon.device.iap.PurchasingListener;
 import com.amazon.device.iap.PurchasingService;
@@ -328,7 +329,8 @@ public class AmazonAppstoreBillingService implements AppstoreInAppBillingService
             final String itemType,
             final int requestCode,
             final IabHelper.OnIabPurchaseFinishedListener listener,
-            final String extraData) {
+            final String extraData,
+            final Bundle extraParams) {
         final RequestId requestId = PurchasingService.purchase(sku);
         requestSkuMap.put(requestId, sku);
         requestListeners.put(requestId, listener);

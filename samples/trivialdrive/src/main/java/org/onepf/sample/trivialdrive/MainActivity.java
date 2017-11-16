@@ -262,7 +262,7 @@ public class MainActivity extends Activity {
          *        verifyDeveloperPayload() for more info. Since this is a SAMPLE, we just use
          *        an empty string, but on a production app you should carefully generate this. */
         String payload = "";
-        mHelper.launchPurchaseFlow(this, InAppConfig.SKU_GAS, RC_REQUEST, mPurchaseFinishedListener, payload);
+        mHelper.launchPurchaseFlow(this, InAppConfig.SKU_GAS, RC_REQUEST, mPurchaseFinishedListener, payload, null);
     }
 
     // User clicked the "Upgrade to Premium" button.
@@ -287,7 +287,7 @@ public class MainActivity extends Activity {
         String payload = "";
 
         mHelper.launchPurchaseFlow(this, InAppConfig.SKU_PREMIUM, RC_REQUEST,
-                mPurchaseFinishedListener, payload);
+                mPurchaseFinishedListener, payload, null);
     }
 
     // "Subscribe to infinite gas" button clicked. Explain to user, then start purchase
@@ -317,7 +317,7 @@ public class MainActivity extends Activity {
         Log.d(TAG, "Launching purchase flow for infinite gas subscription.");
         mHelper.launchPurchaseFlow(this,
                 InAppConfig.SKU_INFINITE_GAS, IabHelper.ITEM_TYPE_SUBS,
-                RC_REQUEST, mPurchaseFinishedListener, payload);
+                RC_REQUEST, mPurchaseFinishedListener, payload, null);
     }
 
     @Override

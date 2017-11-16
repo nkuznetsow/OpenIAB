@@ -866,6 +866,7 @@ public class IabHelper implements AppstoreInAppBillingService {
 
     // Workaround to bug where sometimes response codes come as Long instead of Integer
     int getResponseCodeFromBundle(@NotNull Bundle b) {
+        if (b == null) return BILLING_RESPONSE_RESULT_ERROR;
         Object o = b.get(RESPONSE_CODE);
         if (o == null) {
             Logger.d("Bundle with null response code, assuming OK (known issue)");
